@@ -152,6 +152,67 @@
   top: 150px;
   left: 150px;
 }
+    .arc-wrapper {
+  width: 500px;
+  height: 250px;
+  margin: auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.arc-wheel {
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(0deg);
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Hollow center */
+.arc-wheel::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: #0B0F19;
+  border-radius: 50%;
+  top: 140px;
+  left: 140px;
+}
+
+/* Slices */
+.arc-slice {
+  position: absolute;
+  width: 150px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.arc-slice:hover {
+  transform: scale(1.15);
+}
+
+/* Elegant colors */
+.branding { color: #C084FC; }
+.web { color: #00E5FF; }
+.ads { color: #818CF8; }
+.seo { color: #22D3EE; }
+.social { color: #A78BFA; }
+.creative { color: #7C3AED; }
+
+/* Even spacing (60° each) */
+.arc-slice:nth-child(1) { transform: rotate(0deg) translate(0, -230px) rotate(0deg); top: 50%; left: 50%; }
+.arc-slice:nth-child(2) { transform: rotate(60deg) translate(0, -230px) rotate(-60deg); top: 50%; left: 50%; }
+.arc-slice:nth-child(3) { transform: rotate(120deg) translate(0, -230px) rotate(-120deg); top: 50%; left: 50%; }
+.arc-slice:nth-child(4) { transform: rotate(180deg) translate(0, -230px) rotate(-180deg); top: 50%; left: 50%; }
+.arc-slice:nth-child(5) { transform: rotate(240deg) translate(0, -230px) rotate(-240deg); top: 50%; left: 50%; }
+.arc-slice:nth-child(6) { transform: rotate(300deg) translate(0, -230px) rotate(-300deg); top: 50%; left: 50%; }
+
 
 
   </style>
@@ -266,29 +327,32 @@
 
 
 <!-- SERVICES -->
-<section id="services" class="py-24 text-center relative">
+<section id="services" class="py-24 text-center overflow-hidden relative">
 
   <h2 class="text-4xl md:text-6xl font-bold mb-16">
     Our <span class="gradient-text">Services</span>
   </h2>
 
-  <div class="wheel-container">
+  <div class="arc-wrapper">
 
-    <div class="wheel">
+    <div class="arc-wheel" id="arcWheel">
 
-      <div class="slice branding" onclick="openModal('branding')">Branding</div>
-      <div class="slice web" onclick="openModal('web')">Web Dev</div>
-      <div class="slice ads" onclick="openModal('ads')">Paid Ads</div>
-      <div class="slice seo" onclick="openModal('seo')">SEO</div>
-      <div class="slice social" onclick="openModal('social')">Social Media</div>
-      <div class="slice creative" onclick="openModal('creative')">Creative</div>
+      <div class="arc-slice branding" onclick="openModal('branding')">Branding</div>
+      <div class="arc-slice web" onclick="openModal('web')">Web Dev</div>
+      <div class="arc-slice ads" onclick="openModal('ads')">Paid Ads</div>
+      <div class="arc-slice seo" onclick="openModal('seo')">SEO</div>
+      <div class="arc-slice social" onclick="openModal('social')">Social</div>
+      <div class="arc-slice creative" onclick="openModal('creative')">Creative</div>
 
     </div>
 
   </div>
 
-</section>
+  <div class="mt-10 text-gray-400 text-sm">
+    Scroll to rotate
+  </div>
 
+</section>
 
 
 <!-- TESTIMONIALS -->
@@ -414,6 +478,26 @@
     modal.classList.add("hidden");
   }
 </script>
+  <script>
+  const wheel = document.getElementById("arcWheel");
+  let currentIndex = 0;
+  const total = 6;
+  const step = 60; // 360 / 6
+
+  window.addEventListener("wheel", (e) => {
+    if (e.deltaY > 0) {
+      currentIndex++;
+    } else {
+      currentIndex--;
+    }
+
+    if (currentIndex < 0) currentIndex = total - 1;
+    if (currentIndex >= total) currentIndex = 0;
+
+    wheel.style.transform = `rotate(-${currentIndex * step}deg)`;
+  });
+</script>
+
 
 
 </body>
