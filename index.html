@@ -77,7 +77,7 @@
       right: -150px;
       z-index: 0;
     }
-    ..service-card {
+    .service-card {
   transition: all 0.4s ease;
   transform-style: preserve-3d;
 }
@@ -227,8 +227,6 @@ html {
       </div>
 <div class="relative w-full h-[500px] overflow-hidden rounded-2xl">
 
-<div class="relative w-full h-[500px] overflow-hidden rounded-2xl">
-
   <!-- Floating Blob 1 -->
   <div class="blob blob1"></div>
 
@@ -253,7 +251,7 @@ html {
 
   </section>
 <!-- Authority Section -->
-<section class="py-16 md:py-24
+
 px-8 lg:px-20 reveal">
 
 
@@ -266,7 +264,8 @@ px-8 lg:px-20 reveal">
       Proven Growth. Measurable Impact.
     </h2>
 
-    <div class="grid grid-cols-3 text-center gap-2 text-sm md:text-base">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6
+ text-center gap-2 text-sm md:text-base">
 
 
       <div class="p-6 bg-white/5 backdrop-blur-lg rounded-xl border border-purple-500/20">
@@ -294,82 +293,39 @@ px-8 lg:px-20 reveal">
   </div>
 
 </section>
-<!-- Services Section -->
-<section class="py-16 md:py-24
- px-8 lg:px-20 reveal">
+<div class="overflow-x-auto flex gap-6 pb-6 scroll-smooth">
 
-
-  <div class="section-glow"></div>
-
-<section class="py-16 md:py-24
-px-8 lg:px-20 relative z-10">
-
-  <div class="max-w-7xl mx-auto">
-
-    <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-5xl font-bold">
-        Everything You Need To <span class="gradient-text">Scale</span>
-      </h2>
-      <p class="mt-4 text-gray-400 max-w-2xl mx-auto">
-        From brand identity to performance marketing — we build complete digital ecosystems.
-      </p>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
-
-<div class="section-glow"></div>
-
-      <!-- Card 1 -->
-      <div class="service-card p-8 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20 transition duration-300">
-        <h3 class="text-xl font-semibold mb-4">Branding & Identity</h3>
-        <p class="text-gray-400">
-          Logo design, brand strategy, brand guidelines, pitch decks, custom PPTs & PDF profiles.
-        </p>
-      </div>
-
-      <!-- Card 2 -->
-      <div class="service-card p-8 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20 transition duration-300">
-        <h3 class="text-xl font-semibold mb-4">Website Development</h3>
-        <p class="text-gray-400">
-          High-converting websites, landing pages, e-commerce platforms & custom web systems.
-        </p>
-      </div>
-
-      <!-- Card 3 -->
-      <div class="service-card p-8 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20 transition duration-300">
-        <h3 class="text-xl font-semibold mb-4">Performance Marketing</h3>
-        <p class="text-gray-400">
-          Google Ads, Meta Ads, Instagram Ads, retargeting systems & ROI-driven campaigns.
-        </p>
-      </div>
-
-      <!-- Card 4 -->
-      <div class="service-card p-8 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20 transition duration-300">
-        <h3 class="text-xl font-semibold mb-4">SEO & Organic Growth</h3>
-        <p class="text-gray-400">
-          Technical SEO, local SEO, ranking strategy & long-term organic visibility.
-        </p>
-      </div>
-
-      <!-- Card 5 -->
-      <div class="service-card p-8 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20 transition duration-300">
-        <h3 class="text-xl font-semibold mb-4">Social Media Marketing</h3>
-        <p class="text-gray-400">
-          Instagram growth, carousel designs, content calendars & influencer campaigns.
-        </p>
-      </div>
-
-      <!-- Card 6 -->
-      <div class="service-card p-8 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20 transition duration-300">
-        <h3 class="text-xl font-semibold mb-4">Creative Studio</h3>
-        <p class="text-gray-400">
-          Motion graphics, promo videos, product ads & high-impact visual storytelling.
-        </p>
-      </div>
-
-    </div>
-
+  <div class="min-w-[280px] p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20">
+    <h3 class="text-lg font-semibold mb-2">Branding & Identity</h3>
+    <p class="text-gray-400 text-sm">Logo, brand strategy, pitch decks & full identity systems.</p>
   </div>
+
+  <div class="min-w-[280px] p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20">
+    <h3 class="text-lg font-semibold mb-2">Website Development</h3>
+    <p class="text-gray-400 text-sm">High converting websites & landing funnels.</p>
+  </div>
+
+  <div class="min-w-[280px] p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20">
+    <h3 class="text-lg font-semibold mb-2">Performance Marketing</h3>
+    <p class="text-gray-400 text-sm">Google & Meta ads with ROI focus.</p>
+  </div>
+
+  <div class="min-w-[280px] p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20">
+    <h3 class="text-lg font-semibold mb-2">SEO & Organic</h3>
+    <p class="text-gray-400 text-sm">Technical SEO & long term ranking systems.</p>
+  </div>
+
+  <div class="min-w-[280px] p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20">
+    <h3 class="text-lg font-semibold mb-2">Social Media</h3>
+    <p class="text-gray-400 text-sm">Instagram growth & content systems.</p>
+  </div>
+
+  <div class="min-w-[280px] p-6 rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20">
+    <h3 class="text-lg font-semibold mb-2">Creative Studio</h3>
+    <p class="text-gray-400 text-sm">Motion graphics & high impact visuals.</p>
+  </div>
+
+</div>
 
 </section>
 <div class="section-glow"></div>
@@ -392,8 +348,6 @@ px-8 lg:px-20 relative z-10">
     <div class="grid lg:grid-cols-2 gap-12">
 
       <!-- Case Study 1 -->
-<div class="section-glow"></div>
-
 
       <div class="p-6 md:p-8
  rounded-2xl bg-white/5 backdrop-blur-lg border border-purple-500/20 hover:shadow-[0_0_40px_rgba(124,58,237,0.4)] transition duration-300">
@@ -404,17 +358,21 @@ px-8 lg:px-20 relative z-10">
           Built complete branding, website funnel & performance ad system.
         </p>
 
-        <div class="grid grid-cols-3 text-center">
+        <div class="<div class="grid grid-cols-3 text-center gap-4 text-sm md:text-base">
+text-center">
           <div>
-            <h4 class="text-2xl font-bold gradient-text">4X</h4>
+            <h4 class="text-3xl md:text-2xl
+ font-bold gradient-text">4X</h4>
             <p class="text-gray-400 text-sm">ROI</p>
           </div>
           <div>
-            <h4 class="text-2xl font-bold gradient-text">₹1.2Cr</h4>
+            <h4 class="text-3xl md:text-2xl
+ font-bold gradient-text">₹1.2Cr</h4>
             <p class="text-gray-400 text-sm">Revenue</p>
           </div>
           <div>
-            <h4 class="text-2xl font-bold gradient-text">38%</h4>
+            <h4 class="text-3xl md:text-2xl
+font-bold gradient-text">38%</h4>
             <p class="text-gray-400 text-sm">Lower CPL</p>
           </div>
         </div>
@@ -460,7 +418,6 @@ px-8 lg:px-20 relative z-10">
 <div class="section-glow"></div>
 
 <!-- Process Section -->
-<section class="py-16 md:py-24
  px-8 lg:px-20 reveal">
 
 
@@ -505,8 +462,6 @@ px-8 lg:px-20 relative z-10">
 <section class="py-16 md:py-24
 px-8 lg:px-20 reveal">
 
-
-<section class="py-16 md:py-24
  px-8 lg:px-20 bg-black/30 relative z-10">
 
   <div class="max-w-6xl mx-auto text-center mb-16">
@@ -547,12 +502,6 @@ px-8 lg:px-20 reveal">
 <!-- CTA Section -->
 <section class="py-16 md:py-24
  px-8 lg:px-20 reveal">
-
-
-<div class="section-glow"></div>
-
-
-<section class="py-16 md:py-24
 px-8 lg:px-20 text-center relative z-10">
 
   <h2 class="text-3xl md:text-5xl font-bold mb-6">
@@ -572,9 +521,6 @@ px-8 lg:px-20 text-center relative z-10">
 <!-- Contact Section -->
 <section class="py-16 md:py-24
 px-8 lg:px-20 reveal">
-
-
-<section class="py-16 md:py-24
  px-8 lg:px-20 bg-black/40 relative z-10">
 
   <div class="max-w-4xl mx-auto text-center">
