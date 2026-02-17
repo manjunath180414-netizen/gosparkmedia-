@@ -192,6 +192,24 @@ html {
   transform: scale(1.08);
   z-index: 10;
 }
+.services-track {
+  width: max-content;
+  animation: scrollServices 25s linear infinite;
+}
+
+@keyframes scrollServices {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause on hover */
+.services-track:hover {
+  animation-play-state: paused;
+}
 
 
   </style>
