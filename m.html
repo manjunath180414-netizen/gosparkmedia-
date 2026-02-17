@@ -94,6 +94,64 @@
     transform: translateY(0);
   }
 }
+.wheel-container {
+  position: relative;
+  width: 500px;
+  height: 250px;
+  margin: auto;
+  overflow: hidden;
+}
+
+.wheel {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  top: 0;
+  left: 0;
+  border: 2px solid rgba(124,58,237,0.2);
+}
+
+.slice {
+  position: absolute;
+  width: 120px;
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.slice:hover {
+  transform: scale(1.1);
+}
+
+/* Elegant colors */
+.branding { color: #C084FC; }
+.web { color: #00E5FF; }
+.ads { color: #818CF8; }
+.seo { color: #22D3EE; }
+.social { color: #A78BFA; }
+.creative { color: #7C3AED; }
+
+/* Positioning */
+.slice:nth-child(1) { top: 0%; left: 50%; transform: translate(-50%, -50%); }
+.slice:nth-child(2) { top: 25%; left: 85%; transform: translate(-50%, -50%); }
+.slice:nth-child(3) { top: 75%; left: 85%; transform: translate(-50%, -50%); }
+.slice:nth-child(4) { top: 100%; left: 50%; transform: translate(-50%, -50%); }
+.slice:nth-child(5) { top: 75%; left: 15%; transform: translate(-50%, -50%); }
+.slice:nth-child(6) { top: 25%; left: 15%; transform: translate(-50%, -50%); }
+
+/* Donut center */
+.wheel::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: #0B0F19;
+  border-radius: 50%;
+  top: 150px;
+  left: 150px;
+}
 
 
   </style>
@@ -205,44 +263,33 @@
 
   </div>
 </section>
-<div class="section-glow"></div>
+
 
 <!-- SERVICES -->
-<section class="py-14 md:py-20 px-6 md:px-20">
-  <div class="max-w-6xl mx-auto">
+<section id="services" class="py-24 text-center relative">
 
-    <h2 class="text-3xl md:text-5xl font-bold text-center mb-12">
-      Everything You Need To <span class="gradient-text">Scale</span>
-    </h2>
+  <h2 class="text-4xl md:text-6xl font-bold mb-16">
+    Our <span class="gradient-text">Services</span>
+  </h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+  <div class="wheel-container">
 
-      <div class="service-card p-6 bg-white/5 rounded-xl border border-purple-500/20">
-        <h3 class="text-xl font-semibold mb-3">Branding & Identity</h3>
-        <p class="text-gray-400 text-sm">
-          Logo design, brand strategy, PPTs & digital profiles.
-        </p>
-      </div>
+    <div class="wheel">
 
-      <div class="service-card p-6 bg-white/5 rounded-xl border border-purple-500/20">
-        <h3 class="text-xl font-semibold mb-3">Website Development</h3>
-        <p class="text-gray-400 text-sm">
-          High-converting websites & landing pages.
-        </p>
-      </div>
-
-      <div class="service-card p-6 bg-white/5 rounded-xl border border-purple-500/20">
-        <h3 class="text-xl font-semibold mb-3">Performance Marketing</h3>
-        <p class="text-gray-400 text-sm">
-          Google Ads, Meta Ads & ROI-driven campaigns.
-        </p>
-      </div>
+      <div class="slice branding" onclick="openModal('branding')">Branding</div>
+      <div class="slice web" onclick="openModal('web')">Web Dev</div>
+      <div class="slice ads" onclick="openModal('ads')">Paid Ads</div>
+      <div class="slice seo" onclick="openModal('seo')">SEO</div>
+      <div class="slice social" onclick="openModal('social')">Social Media</div>
+      <div class="slice creative" onclick="openModal('creative')">Creative</div>
 
     </div>
 
   </div>
+
 </section>
-<div class="section-glow"></div>
+
+
 
 <!-- TESTIMONIALS -->
 <section class="py-14 md:py-20 px-6 md:px-20 bg-black/30">
@@ -313,6 +360,61 @@
   window.addEventListener("scroll", reveal);
   reveal();
 </script>
+  <!-- Modal -->
+<div id="modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+  <div class="bg-[#0B0F19] border border-purple-500/30 p-8 rounded-xl max-w-lg w-full relative">
+
+    <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white">✕</button>
+
+    <h3 id="modalTitle" class="text-2xl font-bold mb-4 gradient-text"></h3>
+    <p id="modalContent" class="text-gray-300"></p>
+
+  </div>
+</div>
+<script>
+  const modal = document.getElementById("modal");
+  const title = document.getElementById("modalTitle");
+  const content = document.getElementById("modalContent");
+
+  const servicesData = {
+    branding: {
+      title: "Branding & Identity",
+      text: "We craft brand positioning, visual identity, logos, brand guidelines and pitch decks that create authority and recognition."
+    },
+    web: {
+      title: "Website Development",
+      text: "High-converting websites designed for performance, speed, SEO and lead generation."
+    },
+    ads: {
+      title: "Performance Marketing",
+      text: "Strategic Google & Meta ad campaigns optimized for ROI, scaling and automation."
+    },
+    seo: {
+      title: "SEO Strategy",
+      text: "Technical SEO, on-page optimization, content authority and long-term ranking systems."
+    },
+    social: {
+      title: "Social Media Growth",
+      text: "Content strategy, Instagram growth, carousels, reels and community building."
+    },
+    creative: {
+      title: "Creative Studio",
+      text: "Motion graphics, brand films, ad creatives and visual storytelling."
+    }
+  };
+
+  function openModal(service) {
+    title.innerText = servicesData[service].title;
+    content.innerText = servicesData[service].text;
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+  }
+
+  function closeModal() {
+    modal.classList.add("hidden");
+  }
+</script>
+
 
 </body>
 </html>
