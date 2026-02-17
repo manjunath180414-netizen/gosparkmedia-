@@ -68,15 +68,19 @@
     }
 
     .bg-glow {
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(124,58,237,0.4) 0%, transparent 70%);
-      filter: blur(120px);
-      top: -150px;
-      right: -150px;
-      z-index: 0;
-    }
+  position: absolute;
+  width: 80vw;
+  height: 80vw;
+  max-width: 500px;
+  background: radial-gradient(circle, rgba(124,58,237,0.4) 0%, transparent 70%);
+  filter: blur(100px);
+  top: -100px;
+  right: -20vw;
+  z-index: 0;
+  pointer-events: none;
+}
+
+
     .service-card {
   transition: all 0.4s ease;
   transform-style: preserve-3d;
@@ -179,7 +183,9 @@ html {
 <body class="text-white relative">
 
   <!-- Background Glow -->
+<section class="relative overflow-hidden">
   <div class="bg-glow"></div>
+
 
   <!-- Navbar -->
   <nav class="flex justify-between items-center px-8 py-6 relative z-10">
