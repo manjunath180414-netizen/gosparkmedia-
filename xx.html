@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lead Upload Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- PapaParse Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            margin: 0;
+            padding: 0;
+            color: white;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+            background: rgba(255,255,255,0.05);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .upload-box {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            background: white;
+            color: black;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            color: black;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #1e90ff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        .count-box {
+            margin-top: 20px;
+            font-size: 18px;
+            text-align: right;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>Lead Upload Portal</h1>
+
+    <div class="upload-box">
+        <input type="file" id="csvFile" accept=".csv" />
+    </div>
+
+    <div id="tableContainer"></div>
+
+    <div class="count-box" id="leadCount"></div>
+</div>
+
+<script>
+
+document.getElementById('csvFile').addEventListener('change', function(event) {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        complete: function(results) {
+
+            const data = results.data;
+
+            let filteredData = [];
+
+            data.forEach(row => {
+
+                const name = row['name'] || row['Name'];
+                const number = row['number'] || row['Number'];
+                const phone = row['student phone number'] || row['Student Phone Number'];
+
+                if (name && number && phone) {
+                    filteredData.push({
+                        name: name,
+                        number: number,
+                        phone: phone
+                    });
+                }
+
+            });
+
+            generateTable(filteredData);
+
+        }
+    });
+
+});
+
+function generateTable(data) {
+
+    if (data.length === 0) {
+        document.getElementById("tableContainer").innerHTML = "<p>No valid data found.</p>";
+        return;
+    }
+
+    let tableHTML = `
+        <table>
+            <tr>
+                <th>Student Name</th>
+                <th>Number</th>
+                <th>Student Phone Number</th>
+            </tr>
+    `;
+
+    data.forEach(row => {
+        tableHTML += `
+            <tr>
+                <td>${row.name}</td>
+                <td>${row.number}</td>
+                <td>${row.phone}</td>
+            </tr>
+        `;
+    });
+
+    tableHTML += "</table>";
+
+    document.getElementById("tableContainer").innerHTML = tableHTML;
+
+    document.getElementById("leadCount").innerHTML =
+        "Total Leads Uploaded: " + data.length;
+
+}
+
+</script>
+
+</body>
+</html>
+
