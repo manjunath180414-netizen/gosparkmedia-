@@ -1,75 +1,60 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>CRM Lead Upload Portal</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <title>Lead Upload Portal</title>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fc;
-            margin: 0;
-            padding: 0;
+            font-family: Arial;
+            background: #f5f7fb;
+            padding: 40px;
         }
-
-        .container {
-            width: 90%;
-            max-width: 1000px;
-            margin: 40px auto;
-            background: #ffffff;
+        .box {
+            background: white;
             padding: 30px;
             border-radius: 10px;
+            max-width: 900px;
+            margin: auto;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
-
         h2 {
             text-align: center;
             color: #1a237e;
         }
-
-        input[type="file"] {
-            display: block;
-            margin: 20px auto;
-            padding: 10px;
-        }
-
         table {
             width: 100%;
-            border-collapse: collapse;
             margin-top: 20px;
+            border-collapse: collapse;
         }
-
         th {
             background: #1a237e;
             color: white;
             padding: 10px;
         }
-
         td {
-            padding: 10px;
+            padding: 8px;
             border-bottom: 1px solid #ddd;
         }
-
         tr:hover {
             background: #f1f1f1;
         }
-
-        .info {
+        #message {
+            margin-top: 15px;
+            font-weight: bold;
             text-align: center;
-            color: green;
-            margin-top: 10px;
         }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>📊 Lead Upload Portal</h2>
+<div class="box">
+    <h2>📊 CRM Lead Upload</h2>
 
-    <input type="file" id="csvFile" accept=".csv">
+    <input type="file" id="fileInput" accept=".csv" />
 
-    <div class="info" id="message"></div>
+    <div id="message"></div>
 
-    <table id="leadTable" style="display:none;">
+    <table id="table" style="display:none;">
         <thead>
             <tr>
                 <th>Name</th>
@@ -81,44 +66,57 @@
 </div>
 
 <script>
-document.getElementById('csvFile').addEventListener('change', function(event) {
-    const file = event.target.files[0];
+document.getElementById("fileInput").addEventListener("change", function(e) {
+    const file = e.target.files[0];
+    const message = document.getElementById("message");
 
-    if (!file) return;
+    if (!file) {
+        message.innerHTML = "❌ No file selected";
+        return;
+    }
+
+    if (!file.name.endsWith(".csv")) {
+        message.innerHTML = "❌ Please upload CSV file only";
+        return;
+    }
 
     Papa.parse(file, {
         header: true,
         skipEmptyLines: true,
-        complete: function(results) {
-            const data = results.data;
-            const headers = results.meta.fields.map(h => h.toLowerCase().trim());
+        complete: function(result) {
 
-            // Find matching name column
-            const nameIndex = headers.findIndex(h =>
-                h.includes("name")
-            );
-
-            // Find matching number column
-            const numberIndex = headers.findIndex(h =>
-                h.includes("number") || 
-                h.includes("phone") || 
-                h.includes("mobile")
-            );
-
-            if (nameIndex === -1 || numberIndex === -1) {
-                document.getElementById("message").innerText =
-                    "❌ Could not detect Name and Number columns!";
+            if (!result.data || result.data.length === 0) {
+                message.innerHTML = "❌ File is empty or unreadable";
                 return;
             }
 
-            const nameHeader = results.meta.fields[nameIndex];
-            const numberHeader = results.meta.fields[numberIndex];
+            const headers = result.meta.fields.map(h => h.toLowerCase().trim());
 
-            const table = document.getElementById("leadTable");
+            let nameHeader = null;
+            let numberHeader = null;
+
+            result.meta.fields.forEach(originalHeader => {
+                let h = originalHeader.toLowerCase().trim();
+
+                if (h.includes("name")) {
+                    nameHeader = originalHeader;
+                }
+
+                if (h.includes("number") || h.includes("phone") || h.includes("mobile")) {
+                    numberHeader = originalHeader;
+                }
+            });
+
+            if (!nameHeader || !numberHeader) {
+                message.innerHTML = "❌ Could not detect Name or Number column.";
+                return;
+            }
+
+            const table = document.getElementById("table");
             const tbody = table.querySelector("tbody");
             tbody.innerHTML = "";
 
-            data.forEach(row => {
+            result.data.forEach(row => {
                 const name = row[nameHeader];
                 const number = row[numberHeader];
 
@@ -130,8 +128,11 @@ document.getElementById('csvFile').addEventListener('change', function(event) {
             });
 
             table.style.display = "table";
-            document.getElementById("message").innerText =
-                "✅ Leads uploaded successfully!";
+            message.innerHTML = "✅ Leads loaded successfully!";
+        },
+
+        error: function(err) {
+            message.innerHTML = "❌ Error reading file: " + err.message;
         }
     });
 });
@@ -139,4 +140,3 @@ document.getElementById('csvFile').addEventListener('change', function(event) {
 
 </body>
 </html>
-
