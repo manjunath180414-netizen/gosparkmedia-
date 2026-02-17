@@ -1,100 +1,87 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lead Upload Portal</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- PapaParse Library -->
+    <title>CRM Lead Upload Portal</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
-
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            background: #f4f7fc;
             margin: 0;
             padding: 0;
-            color: white;
         }
 
         .container {
             width: 90%;
-            max-width: 1100px;
+            max-width: 1000px;
             margin: 40px auto;
-            background: rgba(255,255,255,0.05);
+            background: #ffffff;
             padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
 
-        h1 {
+        h2 {
             text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .upload-box {
-            text-align: center;
-            margin-bottom: 30px;
+            color: #1a237e;
         }
 
         input[type="file"] {
+            display: block;
+            margin: 20px auto;
             padding: 10px;
-            background: white;
-            color: black;
-            border-radius: 8px;
-            cursor: pointer;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            background: white;
-            color: black;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        th, td {
-            padding: 12px;
-            text-align: left;
         }
 
         th {
-            background: #1e90ff;
+            background: #1a237e;
             color: white;
+            padding: 10px;
         }
 
-        tr:nth-child(even) {
-            background: #f2f2f2;
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
         }
 
-        .count-box {
-            margin-top: 20px;
-            font-size: 18px;
-            text-align: right;
-            font-weight: bold;
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        .info {
+            text-align: center;
+            color: green;
+            margin-top: 10px;
         }
     </style>
 </head>
-
 <body>
 
 <div class="container">
-    <h1>Lead Upload Portal</h1>
+    <h2>📊 Lead Upload Portal</h2>
 
-    <div class="upload-box">
-        <input type="file" id="csvFile" accept=".csv" />
-    </div>
+    <input type="file" id="csvFile" accept=".csv">
 
-    <div id="tableContainer"></div>
+    <div class="info" id="message"></div>
 
-    <div class="count-box" id="leadCount"></div>
+    <table id="leadTable" style="display:none;">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Number</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
 </div>
 
 <script>
-
 document.getElementById('csvFile').addEventListener('change', function(event) {
-
     const file = event.target.files[0];
 
     if (!file) return;
@@ -103,69 +90,51 @@ document.getElementById('csvFile').addEventListener('change', function(event) {
         header: true,
         skipEmptyLines: true,
         complete: function(results) {
-
             const data = results.data;
+            const headers = results.meta.fields.map(h => h.toLowerCase().trim());
 
-            let filteredData = [];
+            // Find matching name column
+            const nameIndex = headers.findIndex(h =>
+                h.includes("name")
+            );
+
+            // Find matching number column
+            const numberIndex = headers.findIndex(h =>
+                h.includes("number") || 
+                h.includes("phone") || 
+                h.includes("mobile")
+            );
+
+            if (nameIndex === -1 || numberIndex === -1) {
+                document.getElementById("message").innerText =
+                    "❌ Could not detect Name and Number columns!";
+                return;
+            }
+
+            const nameHeader = results.meta.fields[nameIndex];
+            const numberHeader = results.meta.fields[numberIndex];
+
+            const table = document.getElementById("leadTable");
+            const tbody = table.querySelector("tbody");
+            tbody.innerHTML = "";
 
             data.forEach(row => {
+                const name = row[nameHeader];
+                const number = row[numberHeader];
 
-                const name = row['name'] || row['Name'];
-                const number = row['number'] || row['Number'];
-                const phone = row['student phone number'] || row['Student Phone Number'];
-
-                if (name && number && phone) {
-                    filteredData.push({
-                        name: name,
-                        number: number,
-                        phone: phone
-                    });
+                if (name && number) {
+                    const tr = document.createElement("tr");
+                    tr.innerHTML = `<td>${name}</td><td>${number}</td>`;
+                    tbody.appendChild(tr);
                 }
-
             });
 
-            generateTable(filteredData);
-
+            table.style.display = "table";
+            document.getElementById("message").innerText =
+                "✅ Leads uploaded successfully!";
         }
     });
-
 });
-
-function generateTable(data) {
-
-    if (data.length === 0) {
-        document.getElementById("tableContainer").innerHTML = "<p>No valid data found.</p>";
-        return;
-    }
-
-    let tableHTML = `
-        <table>
-            <tr>
-                <th>Student Name</th>
-                <th>Number</th>
-                <th>Student Phone Number</th>
-            </tr>
-    `;
-
-    data.forEach(row => {
-        tableHTML += `
-            <tr>
-                <td>${row.name}</td>
-                <td>${row.number}</td>
-                <td>${row.phone}</td>
-            </tr>
-        `;
-    });
-
-    tableHTML += "</table>";
-
-    document.getElementById("tableContainer").innerHTML = tableHTML;
-
-    document.getElementById("leadCount").innerHTML =
-        "Total Leads Uploaded: " + data.length;
-
-}
-
 </script>
 
 </body>
