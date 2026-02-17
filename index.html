@@ -15,20 +15,47 @@
     }
 
     .gradient-text {
-      background: linear-gradient(90deg, #7C3AED, #00E5FF);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+  background: linear-gradient(270deg, #7C3AED, #00E5FF, #7C3AED);
+  background-size: 600% 600%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientMove 6s ease infinite;
+}
 
-    .glow-btn {
-      background: linear-gradient(90deg, #7C3AED, #4F46E5);
-      transition: 0.3s ease-in-out;
-    }
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    .glow-btn:hover {
-      box-shadow: 0 0 25px #7C3AED;
-      transform: translateY(-3px);
-    }
+
+.glow-btn {
+  background: linear-gradient(90deg, #7C3AED, #4F46E5);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.glow-btn:hover {
+  box-shadow: 0 0 30px #7C3AED;
+  transform: translateY(-4px);
+}
+
+.glow-btn::after {
+  content: '';
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 60%);
+  top: -10%;
+  left: -10%;
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.glow-btn:hover::after {
+  opacity: 1;
+}
 
     .outline-btn {
       border: 1px solid #7C3AED;
@@ -50,11 +77,17 @@
       right: -150px;
       z-index: 0;
     }
-    .service-card:hover {
-  transform: translateY(-10px);
-  border-color: #7C3AED;
-  box-shadow: 0 0 30px rgba(124,58,237,0.4);
+    ..service-card {
+  transition: all 0.4s ease;
+  transform-style: preserve-3d;
 }
+
+.service-card:hover {
+  transform: translateY(-15px) scale(1.02);
+  border-color: #7C3AED;
+  box-shadow: 0 25px 60px rgba(124,58,237,0.3);
+}
+
 @keyframes fadeIn {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
@@ -118,6 +151,19 @@
 @keyframes slideUp {
   0% { opacity: 0; transform: translateY(40px); }
   100% { opacity: 1; transform: translateY(0); }
+}
+html {
+  scroll-behavior: smooth;
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: all 1s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
   </style>
@@ -517,6 +563,23 @@
   </p>
 
 </footer>
+<script>
+  const revealElements = document.querySelectorAll('.reveal');
+
+  const revealOnScroll = () => {
+    revealElements.forEach((el) => {
+      const windowHeight = window.innerHeight;
+      const elementTop = el.getBoundingClientRect().top;
+      const revealPoint = 100;
+
+      if (elementTop < windowHeight - revealPoint) {
+        el.classList.add('active');
+      }
+    });
+  };
+
+  window.addEventListener('scroll', revealOnScroll);
+</script>
 
 
 </body>
