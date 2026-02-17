@@ -1,1 +1,148 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Refund & Cancellation Policy | GoSparkMedia</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body {
+  background:#0B0F19;
+  color:white;
+  font-family: Arial, sans-serif;
+  overflow-x:hidden;
+}
+
+/* Gradient Text */
+.gradient-text {
+  background: linear-gradient(270deg, #7C3AED, #00E5FF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Glass Card */
+.legal-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(124,58,237,0.2);
+  backdrop-filter: blur(20px);
+  transition: all 0.6s ease;
+}
+
+/* Scroll Reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Animated Background Glow */
+.bg-glow {
+  position:absolute;
+  width:600px;
+  height:600px;
+  background: radial-gradient(circle, rgba(124,58,237,0.3), transparent 70%);
+  filter: blur(120px);
+  animation: floatGlow 14s ease-in-out infinite alternate;
+  z-index:0;
+}
+
+@keyframes floatGlow {
+  from { transform: translate(0,0); }
+  to { transform: translate(-80px,60px); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Glow -->
+<div class="bg-glow bottom-0 left-0"></div>
+
+<!-- Hero -->
+<section class="py-24 px-6 md:px-20 text-center relative z-10">
+  <h1 class="text-4xl md:text-6xl font-bold mb-4">
+    Refund & <span class="gradient-text">Cancellation Policy</span>
+  </h1>
+  <p class="text-gray-400">
+    Last Updated: February 2026
+  </p>
+</section>
+
+<!-- Content -->
+<section class="pb-24 px-6 md:px-20 relative z-10">
+  <div class="max-w-4xl mx-auto space-y-12">
+
+    <div class="legal-card p-8 rounded-2xl reveal">
+      <h2 class="text-2xl font-semibold mb-4">1. General Policy</h2>
+      <p class="text-gray-300 leading-relaxed">
+        Due to the nature of digital services, payments made for completed
+        or partially completed services are non-refundable unless otherwise agreed in writing.
+      </p>
+    </div>
+
+    <div class="legal-card p-8 rounded-2xl reveal">
+      <h2 class="text-2xl font-semibold mb-4">2. Project-Based Services</h2>
+      <p class="text-gray-300 leading-relaxed">
+        Refund requests must be made before project initiation.
+        Once work has commenced, refunds may not be applicable.
+        Milestone-based payments are non-refundable once the milestone is delivered.
+      </p>
+    </div>
+
+    <div class="legal-card p-8 rounded-2xl reveal">
+      <h2 class="text-2xl font-semibold mb-4">3. Marketing & Advertising Services</h2>
+      <p class="text-gray-300 leading-relaxed">
+        Performance marketing and advertising services involve external platform variables.
+        Service fees are non-refundable once campaigns are launched or strategies are implemented.
+      </p>
+    </div>
+
+    <div class="legal-card p-8 rounded-2xl reveal">
+      <h2 class="text-2xl font-semibold mb-4">4. Cancellation</h2>
+      <p class="text-gray-300 leading-relaxed">
+        Clients may cancel ongoing services with written notice.
+        Any outstanding dues must be settled prior to termination.
+      </p>
+    </div>
+
+    <div class="legal-card p-8 rounded-2xl reveal">
+      <h2 class="text-2xl font-semibold mb-4">5. Exceptional Circumstances</h2>
+      <p class="text-gray-300 leading-relaxed">
+        In rare and justified cases, GoSparkMedia may evaluate partial refunds
+        at its sole discretion.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="py-10 text-center border-t border-purple-500/20 text-gray-400 relative z-10">
+  © 2026 GoSparkMedia. All Rights Reserved.
+</footer>
+
+<!-- Scroll Animation Script -->
+<script>
+const reveals = document.querySelectorAll(".reveal");
+
+window.addEventListener("scroll", () => {
+  reveals.forEach((el) => {
+    const windowHeight = window.innerHeight;
+    const elementTop = el.getBoundingClientRect().top;
+    const revealPoint = 100;
+
+    if (elementTop < windowHeight - revealPoint) {
+      el.classList.add("active");
+    }
+  });
+});
+</script>
+
+</body>
+</html>
